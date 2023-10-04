@@ -1,7 +1,20 @@
 import { useState } from "react";
-import { TOTAL_ATTRIBUTE_POINTS, INITIAL_ATTRIBUTE_POINTS } from "../../consts";
+import {
+  SKILL_LIST,
+  TOTAL_ATTRIBUTE_POINTS,
+  INITIAL_ATTRIBUTE_POINTS,
+} from "../../consts";
 
-export const Attributes = ({ attributeStats, setAttributeStats }) => {
+export const Attributes = ({
+  index,
+  playerStats,
+  setAvailableSkillPoints,
+  setPlayerStats,
+  setTotalSkillPoints,
+  totalSkillPoints,
+}) => {
+  const attributeStats = playerStats[index].attributes;
+
   const [availableAttributePoints, setAvailableAttributePoints] = useState(
     TOTAL_ATTRIBUTE_POINTS -
       INITIAL_ATTRIBUTE_POINTS * Object.values(attributeStats).length
@@ -26,10 +39,37 @@ export const Attributes = ({ attributeStats, setAttributeStats }) => {
           modifier: attributeModifier,
         },
       };
-
-      setAttributeStats(updatedAttributeStats);
+      const updatedPlayerAttributeStats = [...playerStats];
+      updatedPlayerAttributeStats[index] = {
+        ...updatedPlayerAttributeStats[index],
+        attributes: { ...updatedAttributeStats },
+      };
+      setPlayerStats(updatedPlayerAttributeStats);
 
       setAvailableAttributePoints(updateAttributePoints);
+
+      // update total skill points if intelligence
+      if (attribute === "Intelligence") {
+        const skillPoints = 10 + 4 * attributeModifier;
+        if (totalSkillPoints !== skillPoints) {
+          setAvailableSkillPoints(skillPoints > 0 ? skillPoints : 0);
+          setTotalSkillPoints(skillPoints > 0 ? skillPoints : 0);
+
+          // reset skills
+          const initialSkillsStats = SKILL_LIST.map((skill) => ({
+            ...skill,
+            stat: 0,
+          }));
+
+          const updatedPlayerSkillsStats = [...updatedPlayerAttributeStats];
+          updatedPlayerSkillsStats[index] = {
+            ...updatedPlayerSkillsStats[index],
+            skills: [...initialSkillsStats],
+          };
+
+          setPlayerStats(updatedPlayerSkillsStats);
+        }
+      }
     }
   };
 

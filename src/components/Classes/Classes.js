@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { CLASS_LIST } from "../../consts";
 
-export const Classes = ({ attributeStats }) => {
+export const Classes = ({ index, playerStats }) => {
   const [selectedClass, setSelectedClass] = useState("");
+
+  const attributeStats = playerStats[index].attributes;
 
   const toggleClassRequirements = (className) => {
     selectedClass !== className
@@ -13,7 +15,7 @@ export const Classes = ({ attributeStats }) => {
   const areClassRequirementsMet = (className) =>
     Object.entries(CLASS_LIST[className]).every(
       ([attribute, minRequirement]) =>
-        attributeStats[attribute] >= minRequirement
+        attributeStats[attribute].stat >= minRequirement
     );
 
   return (

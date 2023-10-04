@@ -1,8 +1,11 @@
 import { useState } from "react";
 import "./App.css";
-import { ATTRIBUTE_LIST, INITIAL_ATTRIBUTE_POINTS } from "../../consts";
-import { Attributes } from "../Attributes/Attributes";
-import { Classes } from "../Classes/Classes";
+import {
+  ATTRIBUTE_LIST,
+  INITIAL_ATTRIBUTE_POINTS,
+  SKILL_LIST,
+} from "../../consts";
+import { PlayerSheet } from "../PlayerSheet/PlayerSheet";
 
 function App() {
   // make an object out of ATTRIBUTE_LIST to store stat and modifier for each attribute
@@ -11,21 +14,45 @@ function App() {
     return acc;
   }, {});
 
-  const [attributeStats, setAttributeStats] = useState(initialAttributeStats);
+  // add initial value of 0 to each skill
+  const initialSkillsStats = SKILL_LIST.map((skill) => ({
+    ...skill,
+    stat: 0,
+  }));
+
+  // storing player attribute and skill stats as an array
+  const [playerStats, setPlayerStats] = useState([
+    {
+      attributes: initialAttributeStats,
+      skills: initialSkillsStats,
+    },
+  ]);
+
+  const addPlayerSheet = () => {
+    const updatedPlayerStats = [...playerStats];
+
+    updatedPlayerStats.push({
+      attributes: initialAttributeStats,
+      skills: initialSkillsStats,
+    });
+
+    setPlayerStats(updatedPlayerStats);
+  };
 
   return (
     <div className="App">
       <header className="App-header">
         <h1>React Coding Exercise</h1>
       </header>
-      <section className="App-section">
-        <Attributes
-          attributeStats={attributeStats}
-          setAttributeStats={setAttributeStats}
+      {playerStats.map((_, index) => (
+        <PlayerSheet
+          key={index}
+          index={index}
+          playerStats={playerStats}
+          setPlayerStats={setPlayerStats}
         />
-
-        <Classes attributeStats={attributeStats} />
-      </section>
+      ))}
+      <button onClick={addPlayerSheet}>Add Player</button>
     </div>
   );
 }
