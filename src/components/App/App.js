@@ -6,6 +6,7 @@ import {
   SKILL_LIST,
 } from "../../consts";
 import { PlayerSheet } from "../PlayerSheet/PlayerSheet";
+import { SkillCheck } from "../SkillCheck/SkillCheck";
 
 function App() {
   // make an object out of ATTRIBUTE_LIST to store stat and modifier for each attribute
@@ -80,6 +81,9 @@ function App() {
         Save Player Data
       </button>
       <button onClick={getPlayerData}>Load Player Data</button>
+      <div className="App-party-check">
+        <SkillCheck playerStats={playerStats} />
+      </div>
       {playerStats.map((_, index) => (
         <PlayerSheet
           key={index}

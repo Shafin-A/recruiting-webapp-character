@@ -3,6 +3,7 @@ import "../App/App.css";
 import { Attributes } from "../Attributes/Attributes";
 import { Classes } from "../Classes/Classes";
 import { Skills } from "../Skills/Skills";
+import { SkillCheck } from "../SkillCheck/SkillCheck";
 
 export const PlayerSheet = ({ index, playerStats, setPlayerStats }) => {
   const [totalSkillPoints, setTotalSkillPoints] = useState(10);
@@ -27,6 +28,8 @@ export const PlayerSheet = ({ index, playerStats, setPlayerStats }) => {
   return (
     <section className="App-section">
       <h2>{`Player ${index + 1}`}</h2>
+
+      <SkillCheck index={index} playerStats={playerStats} />
 
       <Attributes
         index={index}
