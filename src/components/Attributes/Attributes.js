@@ -74,11 +74,11 @@ export const Attributes = ({
   };
 
   useEffect(() => {
-    const updateAttributePoints = Object.values(attributeStats)
+    const usedAttributePoints = Object.values(attributeStats)
       .map((attributeStat) => attributeStat.stat || 0)
       .reduce((acc, stat) => acc + stat, 0);
 
-    setAvailableAttributePoints(TOTAL_ATTRIBUTE_POINTS - updateAttributePoints);
+    setAvailableAttributePoints(TOTAL_ATTRIBUTE_POINTS - usedAttributePoints);
   }, [attributeStats]);
 
   return (
