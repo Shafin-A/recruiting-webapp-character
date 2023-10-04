@@ -1,13 +1,13 @@
 import { useState } from "react";
 import "./App.css";
-import { ATTRIBUTE_LIST, CLASS_LIST, SKILL_LIST } from "../../consts";
+import { ATTRIBUTE_LIST, INITIAL_ATTRIBUTE_POINTS } from "../../consts";
 import { Attributes } from "../Attributes/Attributes";
 import { Classes } from "../Classes/Classes";
 
 function App() {
   // make an object out of ATTRIBUTE_LIST to store stat and modifier for each attribute
   const initialAttributeStats = ATTRIBUTE_LIST.reduce((acc, attribute) => {
-    acc[attribute] = { stat: 10, modifier: 0 };
+    acc[attribute] = { stat: INITIAL_ATTRIBUTE_POINTS, modifier: 0 };
     return acc;
   }, {});
 
