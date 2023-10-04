@@ -39,11 +39,47 @@ function App() {
     setPlayerStats(updatedPlayerStats);
   };
 
+  const savePlayerData = async (playerStats) => {
+    const options = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(playerStats),
+    };
+
+    try {
+      const response = await fetch(
+        "https://recruiting.verylongdomaintotestwith.ca/api/{Shafin-A}/character",
+        options
+      );
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const getPlayerData = async () => {
+    try {
+      const response = await fetch(
+        "https://recruiting.verylongdomaintotestwith.ca/api/{Shafin-A}/character"
+      );
+
+      const data = await response.json();
+      setPlayerStats(data.body);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   return (
     <div className="App">
       <header className="App-header">
         <h1>React Coding Exercise</h1>
       </header>
+      <button onClick={() => savePlayerData(playerStats)}>
+        Save Player Data
+      </button>
+      <button onClick={getPlayerData}>Load Player Data</button>
       {playerStats.map((_, index) => (
         <PlayerSheet
           key={index}

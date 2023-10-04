@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   SKILL_LIST,
   TOTAL_ATTRIBUTE_POINTS,
@@ -72,6 +72,14 @@ export const Attributes = ({
       }
     }
   };
+
+  useEffect(() => {
+    const updateAttributePoints = Object.values(attributeStats)
+      .map((attributeStat) => attributeStat.stat || 0)
+      .reduce((acc, stat) => acc + stat, 0);
+
+    setAvailableAttributePoints(TOTAL_ATTRIBUTE_POINTS - updateAttributePoints);
+  }, [attributeStats]);
 
   return (
     <div>
