@@ -5,9 +5,9 @@ import { Attributes } from "../Attributes/Attributes";
 import { Classes } from "../Classes/Classes";
 
 function App() {
-  // make an object out of ATTRIBUTE_LIST to store stat for each attribute
+  // make an object out of ATTRIBUTE_LIST to store stat and modifier for each attribute
   const initialAttributeStats = ATTRIBUTE_LIST.reduce((acc, attribute) => {
-    acc[attribute] = 10;
+    acc[attribute] = { stat: 10, modifier: 0 };
     return acc;
   }, {});
 
